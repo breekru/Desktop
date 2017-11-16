@@ -115,4 +115,4 @@ case "$option" in
 		;;
 	esac
 esac
-./test.sh
+./macsetup.sh
