@@ -1,14 +1,9 @@
 #!/bin/sh
 echo "New Users"
-echo "-----------"
-echo "Type start to begin"
-read start
-case "$start" in
-"start" | "Start" | "START" )
-	echo "New Users name:"
-	read fullname
-	echo "New Users username:"
-	read uname
+echo "New Users name:"
+read fullname
+echo "New Users username:"
+read uname
 	
 	dscl . -create /Users/"$uname"
 	dscl . -create /Users/"$uname" UserShell /bin/bash
@@ -19,7 +14,14 @@ case "$start" in
 	dscl . -passwd /Users/"$uname" "Pssw0rd#"
 	
 	dscl . append /Groups/admin GroupMembership "$uname"
-	;;
-esac
 
-#shutdown -r
+echo "You will need to reboot for new user to gain admin rights"
+echo "Would you like to reboot now?"
+read answer
+	if [ $answer = "y" | "Y" | "yes" ]
+	then
+		shutdown -r
+	else
+		exit
+	fi
+	

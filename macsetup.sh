@@ -1,8 +1,8 @@
 #!/bin/sh
 clear
 echo "1 - Standard Build"
-echo "2 - Creative Build (includes Creative Cloud)"
-echo "3 - Dev Build"
+echo "2 - Creative Options (includes Creative Cloud)"
+echo "3 - Dev Options"
 echo "4 - Individual Installs"
 echo "[Q]uit"
 echo "[N]ew User"
@@ -26,9 +26,20 @@ case "$option" in
 	brew cask install skype-for-business
 	brew cask install onedrive
 	brew cask install microsoft-office
+	
+	sudo softwareupdate -ia --verbose
+	echo "You will need to reboot for new user to gain admin rights"
+	echo "Would you like to reboot now?"
+	read answer
+		if [ $answer = "y" | "Y" | "yes" ]
+		then
+			shutdown -r
+		else
+			exit
+		fi
 	;;
 "2" )
-	echo "You have chosen Creative Build"
+	echo "Now installing Creative Options"
 	/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/HomeBrew/install/master/install)"
 
 	brew tap caskroom/cask
@@ -47,7 +58,7 @@ case "$option" in
 	open -a "Creative Cloud Installer.app" /usr/local/Caskroom/adobe-creative-cloud/latest/
 	;;
 "3" )
-	echo "You have chosen Dev Build"
+	echo "Now installing Dev Options"
 	echo "Please type your first and last name no space"
 	read you
 	#curl -fsS 'https://raw.githubusercontent.com/legalshield/laptop/master/mac' | sh
